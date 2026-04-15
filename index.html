@@ -268,22 +268,19 @@ function populateCategoryDatalist() {
 }
 
 
-    async function loadData() {
-        const { data, error } = await client.from('products_2').select('*').order('sort_num', { ascending: true });
-        if (data) { 
-            allProducts = data;
+async function loadData() {
+    const { data, error } = await client
+        .from('products_sorted')
+        .select('*');
 
-allProducts.sort((a, b) => {
-    if (a.category < b.category) return -1;
-    if (a.category > b.category) return 1;
-    return a.name.localeCompare(b.name, 'uk');
-});
+    if (data) { 
+        allProducts = data;
 
-renderCategoryTiles();
-            renderCats(); 
-            populateCategoryDatalist(); // <-- Додати цей рядок
-        }
+        renderCategoryTiles();
+        renderCats(); 
+        populateCategoryDatalist();
     }
+}
 
    function formatPrice(p, amount) {
     if (!amount) return '—';
