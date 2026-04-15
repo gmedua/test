@@ -72,7 +72,7 @@
                 <button onclick="document.getElementById('catDropdown').classList.toggle('show')" class="px-5 py-2.5 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-100">Категорії</button>
                 <div id="catDropdown" class="dropdown-content mt-2"></div>
             </div>
-            <button id="adminBtn" class="w-10 h-10 flex items-center justify-center rounded-xl bg-green-50 text-green-600 shadow-sm" title="Вхід в адмінрежим">
+            <button id="adminBtn" class="flex items-center gap-2 px-4 py-2.0 bg-slate-700 text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-lg whitespace-nowrap" title="Вхід в адмінрежим">
     <i class="fas fa-user-shield text-sm"></i> Вхід
 </button>
 
@@ -465,11 +465,11 @@ window.editById = function(id) {
     async function deleteP(id) { if(confirm("Видалити товар?")) { await client.from('products_2').delete().eq('id', id); loadData(); } }
 
     function renderCats() {
-        const cats = ['Всі', ...new Set(allProducts.map(p => p.category).filter(Boolean))];
-        document.getElementById('catDropdown').innerHTML = cats.map(c => `
-            <button onclick="filterByCat('${c}')" class="w-full text-left px-4 py-3 text-[10px] font-black uppercase hover:bg-slate-50 border-b border-slate-50 last:border-0">${c}</button>
-        `).join('');
-    }
+    const cats = ['Всі', ...new Set(allProducts.map(p => p.category).filter(Boolean))];
+    document.getElementById('catDropdown').innerHTML = cats.map(c => `
+        <button onclick="filterByCat('${c}')" class="w-full text-left px-4 py-3 text-xs font-bold uppercase hover:bg-slate-50 border-b border-slate-100 last:border-0">${c}</button>
+    `).join('');
+}
 
 function filterByCat(cat) {
     currentFilter = cat;
@@ -786,7 +786,7 @@ function renderCategoryTiles() {
 
     grid.innerHTML = `
         <div onclick="filterByCat('Всі')"
-     class="cursor-pointer bg-emerald-500 text-white rounded-3xl p-6 shadow-md hover:shadow-lg transition">
+     class="cursor-pointer text-center bg-emerald-500 text-white rounded-3xl p-6 shadow-md hover:shadow-lg transition">
              
             <div class="text-xs font-black uppercase mb-2 opacity-80">
                 Всі товари
@@ -802,19 +802,13 @@ function renderCategoryTiles() {
         </div>
     ` + categories.map(cat => `
         <div onclick="filterByCat('${cat}')"
-             class="cursor-pointer bg-slate-200 rounded-3xl p-6 shadow-md border border-slate-300 hover:bg-slate-100 hover:shadow-xl transition">
+             class="cursor-pointer text-center bg-slate-200 rounded-3xl p-6 shadow-md border border-slate-300 hover:bg-slate-100 hover:shadow-xl transition">
              
-            <div class="text-emerald-600 text-xs font-black uppercase mb-2">
-                Категорія
-            </div>
 
             <div class="text-lg font-bold text-slate-800">
                 ${cat}
             </div>
 
-            <div class="text-[10px] text-slate-400 mt-2">
-                Натисни щоб відкрити товари
-            </div>
         </div>
     `).join('');
 }
