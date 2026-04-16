@@ -502,7 +502,7 @@ async function generatePDF() {
     const visible = currentFilter === 'Всі' ? allProducts : allProducts.filter(p => p.category === currentFilter);
     const printWindow = window.open('', '_blank');
     
-    const categories = [...new Set(visible.map(p => p.category || 'Інше'))].sort();
+    const categories = [...new Set(visible.map(p => p.category || 'Інше'))];
 
     // Функція для попереднього завантаження зображень
     const preloadImages = (products) => {
