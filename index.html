@@ -420,7 +420,7 @@ window.editById = function(id) {
             description: document.getElementById('f_description').value,
             category: document.getElementById('f_category').value,
             dosage: document.getElementById('f_dosage').value,
-            image_url: document.getElementById('f_image_url').value,
+            image_url: normalizeImage(document.getElementById('f_image_url').value),
             price_base: parseFloat(document.getElementById('f_price_base').value) || 0,
             currency: document.getElementById('f_currency').value,
             is_special_rate: parseInt(document.getElementById('f_is_special_rate').value),
@@ -462,6 +462,18 @@ window.editById = function(id) {
 }
 
     async function deleteP(id) { if(confirm("Видалити товар?")) { await client.from('products_2').delete().eq('id', id); loadData(); } }
+
+    function normalizeImage(url) {
+    if (!url) return '';
+
+    // вже Cloudinary upload → нічого не чіпаємо
+    if (url.includes('res.cloudinary.com/dtmvidhde/image/upload/')) {
+        return url;
+    }
+
+    // зовнішнє посилання → через fetch + watermark
+    return `https://res.cloudinary.com/dtmvidhde/image/fetch/w_800/l_Gmed_cosmetics_z7hp7a,fl_layer_apply/${url}`;
+}
 
     function renderCats() {
     const cats = ['Всі', ...new Set(allProducts.map(p => p.category).filter(Boolean))];
@@ -1020,6 +1032,8 @@ function addWatermark(file, callback) {
         };
     };
 }
+
+
 </script>
 
 
